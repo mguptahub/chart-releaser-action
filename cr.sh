@@ -60,6 +60,8 @@ main() {
 
   parse_command_line "$@"
 
+  echo "CMD-Args :: $@"
+
   : "${CR_TOKEN:?Environment variable CR_TOKEN must be set}"
 
   local repo_root
