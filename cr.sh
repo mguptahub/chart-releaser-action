@@ -60,9 +60,10 @@ main() {
 
   parse_command_line "$@"
 
-  echo "CMD-Args :: $@"
-
   : "${CR_TOKEN:?Environment variable CR_TOKEN must be set}"
+
+  echo "CMD-Args :: $@"
+  echo "Prerelease :: $prerelease"
 
   local repo_root
   repo_root=$(git rev-parse --show-toplevel)
@@ -223,7 +224,7 @@ parse_command_line() {
       fi
       ;;
     --prerelease)
-      if [[ -n "${2:-false}" ]]; then
+      if [[ -n "${2:-}" ]]; then
         prerelease="$2"
         shift
       fi
