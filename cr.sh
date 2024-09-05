@@ -56,7 +56,7 @@ main() {
   local mark_as_latest=true
   local packages_with_index=false
   local pages_branch=
-  local prerelease=
+  local prerelease=false
 
   parse_command_line "$@"
 
