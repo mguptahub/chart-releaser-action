@@ -59,11 +59,7 @@ main() {
   local prerelease=false
 
   parse_command_line "$@"
-
   : "${CR_TOKEN:?Environment variable CR_TOKEN must be set}"
-
-  echo "CMD-Args :: $@"
-  echo "Prerelease :: $prerelease"
 
   local repo_root
   repo_root=$(git rev-parse --show-toplevel)
@@ -345,7 +341,6 @@ release_charts() {
     args+=(--prerelease "$prerelease")
   fi
 
-  echo 'Releasing charts... $args[@]'
   cr upload "${args[@]}"
 }
 
