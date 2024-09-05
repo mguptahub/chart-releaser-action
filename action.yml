@@ -124,7 +124,7 @@ runs:
             args+=(--pages-branch "${{ inputs.pages_branch }}")
         fi
 
-        if [[ -n "${{ inputs.prerelease }}" ]]; then
+        if [[ "${{ inputs.prerelease }}" = "true" ]]; then
             args+=(--prerelease "${{ inputs.prerelease }}")
         fi
 
