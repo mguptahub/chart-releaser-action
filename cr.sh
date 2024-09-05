@@ -341,11 +341,11 @@ release_charts() {
   if [[ -n "$pages_branch" ]]; then
     args+=(--pages-branch "$pages_branch")
   fi
-  if [[ -n "$prerelease" ]]; then
+  if [[ "$prerelease" = "true" ]]; then
     args+=(--prerelease "$prerelease")
   fi
 
-  echo 'Releasing charts...'
+  echo 'Releasing charts... $args[@]'
   cr upload "${args[@]}"
 }
 
