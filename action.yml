@@ -128,6 +128,8 @@ runs:
             args+=(--prerelease "${{ inputs.prerelease }}")
         fi
 
+        echo "Running cr with args: ${args[*]}"
+
         "$GITHUB_ACTION_PATH/cr.sh" "${args[@]}"
 
         if [[ -f changed_charts.txt ]]; then
