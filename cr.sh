@@ -38,7 +38,7 @@ Usage: $(basename "$0") <options>
         --skip-upload             Skip package upload, just create the release. Not needed in case of OCI upload.
     -l, --mark-as-latest          Mark the created GitHub release as 'latest' (default: true)
         --packages-with-index     Upload chart packages directly into publishing branch
-        --prerelease              Mark this as 'Pre-release'
+        --prerelease              Mark this as 'Pre-release' (default: false)
 EOF
 }
 
@@ -221,7 +221,7 @@ parse_command_line() {
       fi
       ;;
     --prerelease)
-      if [[ -n "${2:-}" ]]; then
+      if [[ -n "${2:-false}" ]]; then
         prerelease="$2"
         shift
       fi
