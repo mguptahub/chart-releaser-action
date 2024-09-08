@@ -133,6 +133,8 @@ runs:
         fi
 
         if [[ -n "${{ inputs.index_path }}" ]]; then
+            directory_name=$(dirname "${{ inputs.index_path }}")
+            mkdir -p "$directory_name"
             args+=(--index-path "${{ inputs.index_path }}")
         fi
 
