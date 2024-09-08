@@ -39,6 +39,7 @@ Usage: $(basename "$0") <options>
     -l, --mark-as-latest          Mark the created GitHub release as 'latest' (default: true)
         --packages-with-index     Upload chart packages directly into publishing branch
         --prerelease              Mark this as 'Pre-release' (default: false)
+        --index-path              The path to the index file (default: .cr-index/index.yaml)
 EOF
 }
 
@@ -57,6 +58,7 @@ main() {
   local packages_with_index=false
   local pages_branch=
   local prerelease=false
+  local index_path=
 
   parse_command_line "$@"
   : "${CR_TOKEN:?Environment variable CR_TOKEN must be set}"
@@ -222,6 +224,12 @@ parse_command_line() {
     --prerelease)
       if [[ -n "${2:-}" ]]; then
         prerelease="$2"
+        shift
+      fi
+      ;;
+    --index-path)
+      if [[ -n "${2:-}" ]]; then
+        index_path="$2"
         shift
       fi
       ;;

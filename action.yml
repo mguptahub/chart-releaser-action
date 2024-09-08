@@ -60,6 +60,10 @@ inputs:
     description: "Mark this as 'Pre-release'"
     required: false
     default: false
+  index_path:
+    description: "Path to the index.yaml file (default: .cr-index/index.yaml)"
+    required: false
+    default: index.yaml
 outputs:
   changed_charts:
     description: "A comma-separated list of charts that were released on this run. Will be an empty string if no updates were detected, will be unset if `--skip_packaging` is used: in the latter case your custom packaging step is responsible for setting its own outputs if you need them."
@@ -126,6 +130,10 @@ runs:
 
         if [[ "${{ inputs.prerelease }}" = "true" ]]; then
             args+=(--prerelease "${{ inputs.prerelease }}")
+        fi
+
+        if [[ -n "${{ inputs.index_path }}" ]]; then
+            args+=(--index-path "${{ inputs.index_path }}")
         fi
 
         "$GITHUB_ACTION_PATH/cr.sh" "${args[@]}"
