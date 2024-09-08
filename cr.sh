@@ -364,6 +364,8 @@ update_index() {
   fi
   if [[ "$packages_with_index" = true ]]; then
     args+=(--packages-with-index --index-path .)
+  else
+    args+=(--index-path "$index_path")
   fi
   if [[ -n "$pages_branch" ]]; then
     args+=(--pages-branch "$pages_branch")
