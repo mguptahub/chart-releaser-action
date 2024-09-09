@@ -60,8 +60,8 @@ inputs:
     description: "Mark this as 'Pre-release'"
     required: false
     default: false
-  index_path:
-    description: "Path to the index.yaml file (default: .cr-index/index.yaml)"
+  pages_index_path:
+    description: "The relative path to the index file in published branch"
     required: false
     default: index.yaml
 outputs:
@@ -132,10 +132,8 @@ runs:
             args+=(--prerelease "${{ inputs.prerelease }}")
         fi
 
-        if [[ -n "${{ inputs.index_path }}" ]]; then
-            directory_name=$(dirname "${{ inputs.index_path }}")
-            mkdir -p "$directory_name"
-            args+=(--index-path "${{ inputs.index_path }}")
+        if [[ -n "${{ inputs.pages_index_path }}" ]]; then
+            args+=(--pages-index-path "${{ inputs.pages_index_path }}")
         fi
 
         "$GITHUB_ACTION_PATH/cr.sh" "${args[@]}"

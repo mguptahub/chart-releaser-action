@@ -39,7 +39,7 @@ Usage: $(basename "$0") <options>
     -l, --mark-as-latest          Mark the created GitHub release as 'latest' (default: true)
         --packages-with-index     Upload chart packages directly into publishing branch
         --prerelease              Mark this as 'Pre-release' (default: false)
-        --index-path              The path to the index file (default: .cr-index/index.yaml)
+        --pages-index-path        The path to the index.yaml file in the pages branch
 EOF
 }
 
@@ -58,7 +58,7 @@ main() {
   local packages_with_index=false
   local pages_branch=
   local prerelease=false
-  local index_path=
+  local pages_index_path=
 
   parse_command_line "$@"
   : "${CR_TOKEN:?Environment variable CR_TOKEN must be set}"
@@ -227,9 +227,9 @@ parse_command_line() {
         shift
       fi
       ;;
-    --index-path)
+    --pages-index-path)
       if [[ -n "${2:-}" ]]; then
-        index_path="$2"
+        pages_index_path="$2"
         shift
       fi
       ;;
@@ -362,10 +362,12 @@ update_index() {
   if [[ -n "$config" ]]; then
     args+=(--config "$config")
   fi
-  if [[ "$packages_with_index" = true ]]; then
-    args+=(--packages-with-index --index-path .)
-  elif [[ -n "$index_path" ]]; then
-    args+=(--index-path "$index_path" --pages-index-path "$index_path")
+  if [[ "$packages_with_index" = true ]] && [[ -n "$pages_index_path" ]]; then
+    args+=(--packages-with-index --index-path "$pages_index_path")
+  elif [[ "$packages_with_index" = true ]]; then
+      args+=(--packages-with-index --index-path .)
+  elif [[ -n "$pages_index_path" ]]; then
+      args+=(--pages-index-path "$pages_index_path")
   fi
   if [[ -n "$pages_branch" ]]; then
     args+=(--pages-branch "$pages_branch")
